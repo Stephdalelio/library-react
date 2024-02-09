@@ -2,12 +2,13 @@ import './index.css';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from './pages/Home';
 import Books from './pages/Books';
 import { books } from "./data";
 import BookInfo from './pages/Bookinfo';
 import Cart from './pages/Cart';
+
 
 
 function App() {
@@ -50,20 +51,19 @@ function numberOfItems() {
     <Router>
     <div className="App">
       <Nav numberOfItems={numberOfItems()} />
-      <Route path="/" exact component={Home} />
-      <Route path="/books" exact render={() => <Books books={books} />}/>
-      <Route path="/books/:id" render={() => <BookInfo books={books} addToCart={addToCart} cart={cart} />}/>
+      <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/books" element={() => <Books books={books} />} />
+      <Route path="/books/:id" element={() => <BookInfo books={books} addToCart={addToCart} cart={cart} />} />
       <Route 
       path="/cart" 
-      render={() => (
+      element={() => (
       <Cart 
       books={books} 
       cart={cart} 
       changeQuantity={changeQuantity}
-      removeItem={removeItem} 
-      /> 
-      )}
-      />
+      removeItem={removeItem} /> )} />
+      </Routes>
       <Footer />
     </div>
     </Router>
